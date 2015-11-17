@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/YaZaoNews.iml" filepath="$PROJECT_DIR$/YaZaoNews.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YaZaoNews/YaZaoNews-YaZaoNews.iml" filepath="$PROJECT_DIR$/YaZaoNews/YaZaoNews-YaZaoNews.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YaZaoNewsLib/YaZaoNewsLib.iml" filepath="$PROJECT_DIR$/YaZaoNewsLib/YaZaoNewsLib.iml" />
+    </modules>
+  </component>
+</project>
