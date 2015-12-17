@@ -15,37 +15,35 @@ import butterknife.ButterKnife;
  */
 public abstract class YZBaseFragment extends Fragment {
 
-	public interface OnInteractorActivityAndFragment{
-		public void onInteractor();
-	}
-
-
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//Bundle
+		Bundle extras=getActivity().getIntent().getExtras();
+		if (extras!=null){
+			getBundleExtras(extras);
+		}
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		if (getContentViewLayoutID()!=0){
-			return inflater.inflate(getContentViewLayoutID(),null);
+		int layoutID = getContentViewLayoutID();
+		View view = null;
+		if (layoutID != 0) {
+			view = inflater.inflate(layoutID, null);
+			return view;
 		}
-		return super.onCreateView(inflater, container, savedInstanceState);
+		view = super.onCreateView(inflater, container, savedInstanceState);
+		return view;
 	}
+
 
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.bind(this, view);
-
 		initViewsAndEvents();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
 	}
 
 	@Override
@@ -53,6 +51,7 @@ public abstract class YZBaseFragment extends Fragment {
 		super.onDestroyView();
 		ButterKnife.unbind(this);
 	}
+
 
 	@Override
 	public void onDetach() {
@@ -89,6 +88,9 @@ public abstract class YZBaseFragment extends Fragment {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 	}
+
+	protected abstract void getBundleExtras(Bundle extras);
+
 
 	protected abstract int getContentViewLayoutID();
 
