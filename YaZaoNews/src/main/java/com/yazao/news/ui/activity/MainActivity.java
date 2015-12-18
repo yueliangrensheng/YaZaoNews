@@ -2,6 +2,7 @@ package com.yazao.news.ui.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -45,7 +46,8 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 
 	private ActionBarDrawerToggle toggle;
 
-	private long BACK_PRESS_TIME=0L;
+	private long BACK_PRESS_TIME = 0L;
+
 
 	@Override
 	protected void initViewsAndEvents() {
@@ -76,10 +78,6 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
-
-
-
 	}
 
 	@Override
@@ -89,7 +87,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 
 	@Override
 	protected void onNetWorkConneted(NetUtil.NetType type) {
-		Log.i("网络连接成功： "+type.toString());
+		Log.i("网络连接成功： " + type.toString());
 	}
 
 	@Override
@@ -105,7 +103,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	private void setDrawerToggle() {
 
 		toggle = new ActionBarDrawerToggle(
-				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 			@Override
 			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
@@ -119,7 +117,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 			}
 		};
 		drawer.setDrawerListener(toggle);
-		if (toggle!=null){
+		if (toggle != null) {
 			toggle.syncState();
 		}
 
@@ -129,7 +127,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		if (toggle!=null){
+		if (toggle != null) {
 			//This should be called from your Activity's onPostCreate method to synchronize after
 			// the DrawerLayout's instance state has been restored, and any other time when the state
 			// may have diverged in such a way that the ActionBarDrawerToggle was not notified.
@@ -140,7 +138,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		if (toggle!=null){
+		if (toggle != null) {
 			toggle.syncState();
 		}
 	}
@@ -152,15 +150,15 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 		} else {
 			//判断menu是否弹出
 			//点击两次退出应用
-			if(BACK_PRESS_TIME+2000>System.currentTimeMillis()){
+			if (BACK_PRESS_TIME + 2000 > System.currentTimeMillis()) {
 				//退出
 				super.onBackPressed();
-				android.os.Process.killProcess(android.os.Process.myPid());
+				android.os.Process.killProcess(Process.myPid());
 				System.exit(0);
-			}else{
+			} else {
 				//提示再次返回
 				Toast.makeText(MainActivity.this, "再次点击退出应用", Toast.LENGTH_SHORT).show();
-				BACK_PRESS_TIME=System.currentTimeMillis();
+				BACK_PRESS_TIME = System.currentTimeMillis();
 			}
 
 		}
@@ -196,12 +194,12 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 
 		if (id == R.id.nav_news) {
 			//新闻
-			YZMainNewsFragment newsFragment =new YZMainNewsFragment();
-			getSupportFragmentManager().beginTransaction().replace(R.id.contentView,newsFragment).commit();
+			YZMainNewsFragment newsFragment = new YZMainNewsFragment();
+			getSupportFragmentManager().beginTransaction().replace(R.id.contentView, newsFragment).commit();
 		} else if (id == R.id.nav_video) {
 			//视频
-			YZMainNewsFragment newsFragment =new YZMainNewsFragment();
-			getSupportFragmentManager().beginTransaction().replace(R.id.contentView,newsFragment).commit();
+			YZMainNewsFragment newsFragment = new YZMainNewsFragment();
+			getSupportFragmentManager().beginTransaction().replace(R.id.contentView, newsFragment).commit();
 		} else if (id == R.id.nav_img) {
 			//美图
 		} else if (id == R.id.nav_manage) {
@@ -217,22 +215,22 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	}
 
 
-
 	@Override
 	public void initPresenter() {
-		mPresenter=new YZMainPresenterImpl(this,this);
+		mPresenter = new YZMainPresenterImpl(this, this);
 		mPresenter.initialized();
 	}
 
 	@Override
-	public void initMainView(List<NavigationBean> navigationDatas,List<String> newsCategoryData) {
+	public void initMainView(List<NavigationBean> navigationDatas, List<String> newsCategoryData) {
 
-
-		YZMainNewsFragment newsFragment =new YZMainNewsFragment();
-		Bundle bundle=new Bundle();
-		bundle.putStringArrayList("newsCategoryData",(ArrayList)newsCategoryData);
+		YZMainNewsFragment newsFragment = new YZMainNewsFragment();
+		Bundle bundle = new Bundle();
+		bundle.putStringArrayList("newsCategoryData", (ArrayList) newsCategoryData);
 		newsFragment.setArguments(bundle);
-		getSupportFragmentManager().beginTransaction().replace(R.id.contentView,newsFragment).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.contentView, newsFragment).commit();
 
 	}
+
+
 }

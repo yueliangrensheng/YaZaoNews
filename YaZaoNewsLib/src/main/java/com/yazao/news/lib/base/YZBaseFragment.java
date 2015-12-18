@@ -23,7 +23,14 @@ public abstract class YZBaseFragment extends Fragment {
 		if (extras!=null){
 			getBundleExtras(extras);
 		}
+		Bundle arguments = getArguments();
+		if (arguments!=null){
+			getBundleArguments(arguments);
+		}
+
 	}
+
+	protected abstract void getBundleArguments(Bundle arguments);
 
 	@Nullable
 	@Override

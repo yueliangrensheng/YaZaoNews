@@ -10,6 +10,11 @@ import android.os.Bundle;
  */
 public class YZVideoFragment extends BaseFragment {
 	@Override
+	protected void getBundleArguments(Bundle arguments) {
+
+	}
+
+	@Override
 	protected void getBundleExtras(Bundle extras) {
 
 	}

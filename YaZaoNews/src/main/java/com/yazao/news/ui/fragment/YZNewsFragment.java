@@ -18,6 +18,11 @@ public class YZNewsFragment extends BaseFragment {
 	String msg;
 
 	@Override
+	protected void getBundleArguments(Bundle arguments) {
+
+	}
+
+	@Override
 	protected void getBundleExtras(Bundle extras) {
 
 	}

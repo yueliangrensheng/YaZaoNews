@@ -23,7 +23,7 @@ public class YZApp extends Application {
 		super.onCreate();
 
 		//deal with Logger
-		if (BuildConfig.DEBUG) {
+		if (!BuildConfig.DEBUG) {
 			//调试模式,显示日志
 			Log.init("YaZao").hideThreadInfo();
 		} else {

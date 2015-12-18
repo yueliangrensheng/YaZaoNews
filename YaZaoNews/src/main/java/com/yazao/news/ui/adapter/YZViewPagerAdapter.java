@@ -24,7 +24,7 @@ public class YZViewPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		YZNewsFragment newsFragment = new YZNewsFragment();
-		newsFragment.setText("news Page" + position);
+		newsFragment.setText(newsCategoryData!=null?newsCategoryData.get(position):"news Page" + position);
 		return newsFragment;
 	}
 

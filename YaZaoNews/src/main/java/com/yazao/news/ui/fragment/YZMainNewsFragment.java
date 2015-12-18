@@ -1,9 +1,9 @@
 package com.yazao.news.ui.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.yazao.news.R;
 import com.yazao.news.lib.base.YZBaseFragment;
 import com.yazao.news.ui.adapter.YZViewPagerAdapter;
@@ -21,15 +21,21 @@ public class YZMainNewsFragment extends YZBaseFragment implements ViewPager.OnPa
 
 	@Bind(R.id.viewpager)
 	ViewPager mViewPager;
-	@Bind(R.id.tabstrip)
-	PagerSlidingTabStrip tabStrip;
+	//	@Bind(R.id.tabstrip)
+//	PagerSlidingTabStrip tabStrip;
+	@Bind(R.id.tablayout)
+	TabLayout tablayout;
 
 	YZViewPagerAdapter mViewPagerAdapter;
 	List<String> newsCategoryData;
 
 	@Override
+	protected void getBundleArguments(Bundle arguments) {
+		newsCategoryData = arguments.getStringArrayList("newsCategoryData");
+	}
+
+	@Override
 	protected void getBundleExtras(Bundle extras) {
-		newsCategoryData = extras.getStringArrayList("newsCategoryData");
 	}
 
 	@Override
@@ -39,12 +45,21 @@ public class YZMainNewsFragment extends YZBaseFragment implements ViewPager.OnPa
 
 	@Override
 	protected void initViewsAndEvents() {
-		mViewPagerAdapter = new YZViewPagerAdapter(getActivity().getSupportFragmentManager(),newsCategoryData);
+		mViewPagerAdapter = new YZViewPagerAdapter(getActivity().getSupportFragmentManager(), newsCategoryData);
 		mViewPager.setAdapter(mViewPagerAdapter);
 
-		tabStrip.setViewPager(mViewPager);
+//		tabStrip.setViewPager(mViewPager);
 //		tabStrip.setOnPageChangeListener(this);
 
+
+		if (newsCategoryData != null && newsCategoryData.size() > 0) {
+			for (String newCategoryDataTitle : newsCategoryData) {
+				tablayout.addTab(tablayout.newTab().setText(newCategoryDataTitle));
+			}
+		}
+
+		tablayout.setupWithViewPager(mViewPager);
+		tablayout.setTabsFromPagerAdapter(mViewPagerAdapter);
 
 	}
 
