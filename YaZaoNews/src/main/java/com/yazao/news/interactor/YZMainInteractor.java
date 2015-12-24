@@ -1,6 +1,7 @@
 package com.yazao.news.interactor;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 import com.yazao.news.bean.NavigationBean;
 import com.yazao.news.interactor.base.YZBaseInteractor;
@@ -19,9 +20,8 @@ public interface YZMainInteractor  extends YZBaseInteractor {
 	List<NavigationBean> getNavigationData(Context context);
 
 	/**
-	 * 获取新闻数据的分类列表
-	 * @param context
+	 * 获取分类的fragment
 	 * @return
 	 */
-	List<String> getNewsCategoryData(Context context);
+	List<Fragment> getCategoryFragments();
 }

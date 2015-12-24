@@ -8,12 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Field;
+
 import butterknife.ButterKnife;
 
 /**
  * Created by shaopingzhai on 15/11/17.
  */
 public abstract class YZBaseFragment extends Fragment {
+
+	private boolean isFirstResume = true;
+	private boolean isFirstVisible = true;
+	private boolean isFirstInvisible = true;
+	private boolean isPrepared;
+
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,10 +67,49 @@ public abstract class YZBaseFragment extends Fragment {
 		ButterKnife.unbind(this);
 	}
 
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			if (isFirstVisible) {
+				isFirstVisible = false;
+				initPrepare();
+			} else {
+				onUserVisible();
+			}
+		} else {
+			if (isFirstInvisible) {
+				isFirstInvisible = false;
+				onFirstUserInvisible();
+			} else {
+				onUserInvisible();
+			}
+		}
+	}
+
+	private synchronized void initPrepare() {
+		if (isPrepared) {
+			onFirstUserVisible();
+		} else {
+			isPrepared = true;
+		}
+	}
+
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
+		// for bug ---> java.lang.IllegalStateException: Activity has been destroyed
+		try {
+			Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+			childFragmentManager.setAccessible(true);
+			childFragmentManager.set(this, null);
+
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -73,11 +120,21 @@ public abstract class YZBaseFragment extends Fragment {
 	@Override
 	public void onPause() {
 		super.onPause();
+		if (getUserVisibleHint()) {
+			onUserInvisible();
+		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (isFirstResume) {
+			isFirstResume = false;
+			return;
+		}
+		if (getUserVisibleHint()) {
+			onUserVisible();
+		}
 	}
 
 	@Override
@@ -94,7 +151,31 @@ public abstract class YZBaseFragment extends Fragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		initPrepare();
 	}
+
+	/**
+	 * when fragment is visible for the first time, here we can do some initialized work or refresh data only once
+	 */
+	protected abstract void onFirstUserVisible();
+
+	/**
+	 * this method like the fragment's lifecycle method onResume()
+	 */
+	protected abstract void onUserVisible();
+
+	/**
+	 * when fragment is invisible for the first time
+	 */
+	private void onFirstUserInvisible() {
+		// here we do not recommend do something
+	}
+
+	/**
+	 * this method like the fragment's lifecycle method onPause()
+	 */
+	protected abstract void onUserInvisible();
+
 
 	protected abstract void getBundleExtras(Bundle extras);
 

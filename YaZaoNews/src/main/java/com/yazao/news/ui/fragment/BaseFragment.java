@@ -3,39 +3,25 @@ package com.yazao.news.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yazao.news.R;
 import com.yazao.news.lib.base.YZBaseFragment;
-
-import butterknife.Bind;
+import com.yazao.news.presenter.base.YZBasePresenter;
 
 /**
  * <p>
  * Author:  shaopingzhai on 15/12/10. <Br>
  * Time: 2015/12/10 14:22<Br>
  * Contact: shaopingzhai@gmail.com<Br>
- * Weibo: <a href="http://weibo.com/zsp21">微博</a><Br>
  * </p>
  */
-public abstract class BaseFragment extends YZBaseFragment {
-	@Bind(R.id.swiprefreshlayout)
-	protected SwipeRefreshLayout swiprefreshlayout;
+public abstract class BaseFragment<YZ extends YZBasePresenter> extends YZBaseFragment {
 
-	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+	protected YZ mPresenter;
 
-	}
-
-	protected void initSwipeLayout() {
-		if (swiprefreshlayout!=null){
-			swiprefreshlayout.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
-		}
-	}
+	public static final String INTENT_ACTION_NEWS_CATEGORY = "newsCategory";
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +33,26 @@ public abstract class BaseFragment extends YZBaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
+
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		initPresenter();
+//		checkPresenterIsNull();
+	}
+
+	/**
+	 * 初始化presenter
+	 */
+	public abstract void initPresenter();
+
+
+	private void checkPresenterIsNull(){
+		if(mPresenter == null){
+			throw new IllegalStateException("please init mPresenter in initPresenter() method ");
+		}
+	}
+
 
 	@Override
 	public void onDestroy() {
@@ -86,7 +92,6 @@ public abstract class BaseFragment extends YZBaseFragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		initSwipeLayout();
 	}
 
 	@Override

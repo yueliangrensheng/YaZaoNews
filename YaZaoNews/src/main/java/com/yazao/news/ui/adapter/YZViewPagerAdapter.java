@@ -4,8 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.yazao.news.ui.fragment.YZNewsFragment;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,28 +12,21 @@ import java.util.List;
  * Created by shaopingzhai on 15/11/17.
  */
 public class YZViewPagerAdapter extends FragmentPagerAdapter {
-	List<String> newsCategoryData;
+	List<Fragment> fragments = new ArrayList<>();
 
-	public YZViewPagerAdapter(FragmentManager fm, List<String> newsCategoryData) {
+	public YZViewPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
 		super(fm);
-		this.newsCategoryData = newsCategoryData;
-
+		this.fragments = fragments;
 	}
 
 	@Override
 	public Fragment getItem(int position) {
-		YZNewsFragment newsFragment = new YZNewsFragment();
-		newsFragment.setText(newsCategoryData!=null?newsCategoryData.get(position):"news Page" + position);
-		return newsFragment;
+		return fragments.get(position);
 	}
 
 	@Override
 	public int getCount() {
-		return newsCategoryData != null ? newsCategoryData.size() : 0;
+		return fragments.size();
 	}
 
-	@Override
-	public CharSequence getPageTitle(int position) {
-		return newsCategoryData!=null?newsCategoryData.get(position):"";
-	}
 }

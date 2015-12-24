@@ -2,10 +2,12 @@ package com.yazao.news.ui.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,18 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.yazao.news.R;
+import com.yazao.news.api.GlobalParams;
 import com.yazao.news.bean.NavigationBean;
 import com.yazao.news.lib.util.log.Log;
 import com.yazao.news.lib.util.net.NetUtil;
 import com.yazao.news.presenter.impl.YZMainPresenterImpl;
-import com.yazao.news.ui.fragment.YZMainNewsFragment;
+import com.yazao.news.ui.adapter.YZViewPagerAdapter;
 import com.yazao.news.view.YZMainView;
+import com.yazao.news.widget.XViewPager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -41,13 +43,17 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	@Bind(R.id.nav_view)
 	NavigationView navigationView;
 
-	@Bind(R.id.contentView)
-	FrameLayout contentView;
+	@Bind(R.id.viewpager)
+	XViewPager mViewPager;
+
 
 	private ActionBarDrawerToggle toggle;
-
 	private long BACK_PRESS_TIME = 0L;
 
+	/**
+	 * 当前选中的分类(新闻、视频和美图)
+	 */
+	private static int mCurrentSelectedCategory = 0;
 
 	@Override
 	protected void initViewsAndEvents() {
@@ -60,7 +66,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+				Snackbar.make(view, "Don't touch me", Snackbar.LENGTH_LONG)
 						.setAction("Action", null).show();
 			}
 		});
@@ -78,6 +84,21 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+	}
+
+	@Override
+	protected boolean isNoStateBar() {
+		return false;
+	}
+
+	@Override
+	protected boolean isFullScreen() {
+		return false;
+	}
+
+	@Override
+	protected boolean isNoTitle() {
+		return false;
 	}
 
 	@Override
@@ -194,22 +215,39 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 
 		if (id == R.id.nav_news) {
 			//新闻
-			YZMainNewsFragment newsFragment = new YZMainNewsFragment();
-			getSupportFragmentManager().beginTransaction().replace(R.id.contentView, newsFragment).commit();
+			if (mCurrentSelectedCategory == GlobalParams.YZ_CATEGORY_NEWS) {
+				setTitle(item.getTitle());
+				drawer.closeDrawer(GravityCompat.START);
+				return true;
+			}
+			mCurrentSelectedCategory = GlobalParams.YZ_CATEGORY_NEWS;
 		} else if (id == R.id.nav_video) {
 			//视频
-			YZMainNewsFragment newsFragment = new YZMainNewsFragment();
-			getSupportFragmentManager().beginTransaction().replace(R.id.contentView, newsFragment).commit();
+			if (mCurrentSelectedCategory == GlobalParams.YZ_CATEGORY_VIDEO) {
+				setTitle(item.getTitle());
+				drawer.closeDrawer(GravityCompat.START);
+				return true;
+			}
+			mCurrentSelectedCategory = GlobalParams.YZ_CATEGORY_VIDEO;
 		} else if (id == R.id.nav_img) {
 			//美图
-		} else if (id == R.id.nav_manage) {
-
-		} else if (id == R.id.nav_share) {
+			if (mCurrentSelectedCategory == GlobalParams.YZ_CATEGORY_IMAGE) {
+				setTitle(item.getTitle());
+				drawer.closeDrawer(GravityCompat.START);
+				return true;
+			}
+			mCurrentSelectedCategory = GlobalParams.YZ_CATEGORY_IMAGE;
+		}  else if (id == R.id.nav_share) {
 			//分享
+			mCurrentSelectedCategory=-1;
 		} else if (id == R.id.nav_about) {
 			//关于
+			mCurrentSelectedCategory=-1;
 		}
-		setTitle(item.getTitle());
+		if (mCurrentSelectedCategory >= GlobalParams.YZ_CATEGORY_NEWS && mCurrentSelectedCategory <= GlobalParams.YZ_CATEGORY_IMAGE) {
+			mViewPager.setCurrentItem(mCurrentSelectedCategory, false);
+			setTitle(item.getTitle());
+		}
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}
@@ -222,15 +260,19 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	}
 
 	@Override
-	public void initMainView(List<NavigationBean> navigationDatas, List<String> newsCategoryData) {
+	public void initMainView(List<Fragment> fragments, List<NavigationBean> navigationDatas) {
 
-		YZMainNewsFragment newsFragment = new YZMainNewsFragment();
-		Bundle bundle = new Bundle();
-		bundle.putStringArrayList("newsCategoryData", (ArrayList) newsCategoryData);
-		newsFragment.setArguments(bundle);
-		getSupportFragmentManager().beginTransaction().replace(R.id.contentView, newsFragment).commit();
+		mViewPager.setOffscreenPageLimit(1);
+
+		YZViewPagerAdapter mViewPagerAdapter = new YZViewPagerAdapter(getSupportFragmentManager(), fragments);
+		//取消当前页面中的viewpager 滑动功能，将这个滑动功能传递到 其子view 中。也就是事件传递下发给子view
+		mViewPager.setIsEnableScroll(false);
+		mViewPager.setAdapter(mViewPagerAdapter);
 
 	}
 
-
+	@Override
+	public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+		super.onPostCreate(savedInstanceState, persistentState);
+	}
 }

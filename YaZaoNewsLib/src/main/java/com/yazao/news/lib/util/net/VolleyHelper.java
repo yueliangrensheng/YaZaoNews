@@ -9,7 +9,6 @@ import com.android.volley.toolbox.Volley;
  * Author:  MoonLife
  * Time: 2015/12/15 11:45
  * Email: shaopingzhai@gmail.com
- * Weibo: <a href="http://weibo.com/zsp21">新浪微博</a>
  */
 public class VolleyHelper {
 

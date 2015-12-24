@@ -19,5 +19,21 @@
 
     </string-array>
 
+    <array name="images_category_list">
+        <item>美女</item>
+        <item>动漫</item>
+        <item>明星</item>
+        <item>汽车</item>
+        <item>摄影</item>
+        <item>美食</item>
+    </array>
+
+    <array name="videos_category_list">
+        <item>热门</item>
+        <item>搞笑</item>
+        <item>动漫</item>
+        <item>综艺</item>
+    </array>
+
 
 </resources>

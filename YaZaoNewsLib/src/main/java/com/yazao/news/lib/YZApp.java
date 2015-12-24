@@ -25,7 +25,7 @@ public class YZApp extends Application {
 		//deal with Logger
 		if (!BuildConfig.DEBUG) {
 			//调试模式,显示日志
-			Log.init("YaZao").hideThreadInfo();
+			Log.init("YaZao").hideThreadInfo().setMethodCount(1);
 		} else {
 			Log.init("YaZao").setLogLevel(Log.LogLevel.NONE);
 		}

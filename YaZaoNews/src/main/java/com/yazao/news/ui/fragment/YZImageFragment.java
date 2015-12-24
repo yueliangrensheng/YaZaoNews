@@ -15,10 +15,13 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 每个新闻页面展示的内容
- * Created by shaopingzhai on 15/11/17.
+ * Author:  MoonLife
+ * Time: 2015/12/17 10:48
+ * Email: shaopingzhai@gmail.com
+ * Descripton:
  */
-public class YZNewsFragment extends BaseFragment<YZFragmentPresenterImpl> implements YZFragmentView {
+public class YZImageFragment extends BaseFragment<YZFragmentPresenterImpl> implements YZFragmentView {
+
 	@Bind(R.id.tablayout)
 	TabLayout tablayout;
 
@@ -70,8 +73,8 @@ public class YZNewsFragment extends BaseFragment<YZFragmentPresenterImpl> implem
 	public void initView(List<String> oneCategoryDatas) {
 		if (oneCategoryDatas != null && !oneCategoryDatas.isEmpty()) {
 			fragment_viewpager.removeAllViews();
-			fragment_viewpager.setOffscreenPageLimit(3);
-			FragmentMainAdapter mFragmentMainAdapter = new FragmentMainAdapter(getFragmentManager(), oneCategoryDatas, GlobalParams.YZ_CATEGORY_NEWS);
+			fragment_viewpager.setOffscreenPageLimit(oneCategoryDatas.size());
+			FragmentMainAdapter mFragmentMainAdapter = new FragmentMainAdapter(getFragmentManager(), oneCategoryDatas, GlobalParams.YZ_CATEGORY_IMAGE);
 			fragment_viewpager.setAdapter(mFragmentMainAdapter);
 
 			tablayout.removeAllTabs();

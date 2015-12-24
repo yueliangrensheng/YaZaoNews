@@ -2,6 +2,9 @@ package com.yazao.news.lib.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.yazao.news.lib.net.NetChangeObserver;
 import com.yazao.news.lib.net.NetChangeReceiver;
@@ -24,6 +27,23 @@ public abstract class YZBaseActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		if (isNoTitle()){
+		 	/*set it to be no title*/
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+		}
+		if (isNoStateBar()){
+//			View doctorView =findViewById(android.R.id.content);
+			View doctorView =getWindow().getDecorView();
+			doctorView.setSystemUiVisibility(View.INVISIBLE);
+		}
+		if (isFullScreen()){
+	   		/*set it to be full screen*/
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		}
+
 
 		//Bundle
 		Bundle extras = getIntent().getExtras();
@@ -65,6 +85,12 @@ public abstract class YZBaseActivity extends AppCompatActivity {
 
 		initViewsAndEvents();
 	}
+
+	protected abstract boolean isNoStateBar();
+
+	protected abstract boolean isFullScreen();
+
+	protected abstract boolean isNoTitle();
 
 	protected abstract void onNetWorkConneted(NetUtil.NetType type);
 

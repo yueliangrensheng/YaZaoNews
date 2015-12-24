@@ -13,21 +13,21 @@ import com.yazao.news.view.YZMainView;
 public class YZMainPresenterImpl implements YZMainPresenter<YZMainView> {
 
 	private Activity mContext;
-	private  YZMainView mView;
+	private YZMainView mView;
 	private YZMainInteractor mInteractor;
 
-	public YZMainPresenterImpl(Activity context,YZMainView mainView) {
+	public YZMainPresenterImpl(Activity context, YZMainView mainView) {
 		if (null == mainView) {
 			throw new IllegalArgumentException("Constructor's parameters must not be Null");
 		}
 
-		this.mContext=context;
-		this.mView =mainView;
-		mInteractor =new YZMainInteractorImpl();
+		this.mContext = context;
+		this.mView = mainView;
+		mInteractor = new YZMainInteractorImpl();
 	}
 
 	@Override
 	public void initialized() {
-		mView.initMainView(mInteractor.getNavigationData(mContext),mInteractor.getNewsCategoryData(mContext));
+		mView.initMainView(mInteractor.getCategoryFragments(), mInteractor.getNavigationData(mContext));
 	}
 }
