@@ -15,8 +15,8 @@ import com.yazao.news.lib.util.log.Log;
  * Descripton:
  */
 public class NetChangeReceiverUtil {
-	public final static String CUSTOM_ANDROID_NET_CHANGE_ACTION = "com.yazao.news.lib.conn.CONNECTIVITY_CHANGE";
-	private final static String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
+//	public final static String CUSTOM_ANDROID_NET_CHANGE_ACTION = "com.yazao.news.lib.conn.CONNECTIVITY_CHANGE";
+//	private final static String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
 	private static BroadcastReceiver netChangeObserverReceiver;
 
@@ -42,8 +42,8 @@ public class NetChangeReceiverUtil {
 	public  void registerNetworkStateReceiver(Context mContext) {
 		if (netChangeObserverReceiver != null) {
 			IntentFilter filter = new IntentFilter();
-			filter.addAction(CUSTOM_ANDROID_NET_CHANGE_ACTION);
-			filter.addAction(ANDROID_NET_CHANGE_ACTION);
+			filter.addAction(NetChangeReceiver.CUSTOM_ANDROID_NET_CHANGE_ACTION);
+			filter.addAction(NetChangeReceiver.ANDROID_NET_CHANGE_ACTION);
 			mContext.getApplicationContext().registerReceiver(netChangeObserverReceiver, filter);
 			Log.i("registerNetworkStateReceiver");
 		}
@@ -64,7 +64,7 @@ public class NetChangeReceiverUtil {
 
 	public  void sendNetChangeBroadcastReceiver(Context mContext) {
 		Intent intent = new Intent();
-		intent.setAction(CUSTOM_ANDROID_NET_CHANGE_ACTION);
+		intent.setAction(NetChangeReceiver.CUSTOM_ANDROID_NET_CHANGE_ACTION);
 		mContext.sendBroadcast(intent);
 		Log.i("sendNetChangeBroadcastReceiver");
 	}

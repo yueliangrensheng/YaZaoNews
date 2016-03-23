@@ -10,7 +10,7 @@ import com.yazao.news.lib.net.NetChangeObserver;
 import com.yazao.news.lib.net.NetChangeReceiver;
 import com.yazao.news.lib.util.ActivityManager;
 import com.yazao.news.lib.util.SmartBarUtils;
-import com.yazao.news.lib.util.net.NetUtil;
+import com.yazao.news.lib.net.NetUtil;
 
 import butterknife.ButterKnife;
 
@@ -76,7 +76,7 @@ public abstract class YZBaseActivity extends AppCompatActivity {
 
 
 		//set layout
-		int layoutID = getContextViewLayoutID();
+		int layoutID = getContentViewLayoutID();
 		if (layoutID != 0) {
 			setContentView(layoutID);
 		} else {
@@ -109,7 +109,7 @@ public abstract class YZBaseActivity extends AppCompatActivity {
 	 */
 	protected abstract void initViewsAndEvents();
 
-	protected abstract int getContextViewLayoutID();
+	protected abstract int getContentViewLayoutID();
 
 
 	@Override

@@ -18,14 +18,6 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
-        <!--<android.support.design.widget.TabLayout-->
-            <!--android:id="@+id/tablayout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="?attr/colorPrimary"-->
-            <!--app:tabIndicatorColor="?attr/colorAccent"-->
-            <!--app:tabMode="scrollable"></android.support.design.widget.TabLayout>-->
-
     </android.support.design.widget.AppBarLayout>
 
     <com.yazao.news.widget.XViewPager

@@ -6,5 +6,5 @@ package com.yazao.news.interactor.base;
  * Email: shaopingzhai@gmail.com
  * Descripton:
  */
-public interface YZBaseInteractor {
+public interface BaseInteractor {
 }

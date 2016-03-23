@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.animation.OvershootInterpolator;
 
 import com.yazao.news.R;
-import com.yazao.news.lib.util.log.Log;
 import com.yazao.news.ui.adapter.RecyclerViewAdapter;
 import com.yazao.news.widget.RecyclerViewLinearDividerItemDecoration;
 
@@ -17,10 +16,10 @@ import butterknife.Bind;
 import jp.wasabeef.recyclerview.animators.adapters.SlideInRightAnimationAdapter;
 
 /**
- * 新闻页面展示的内容
+ * 每个新闻页面展示的内容
  * Created by shaopingzhai on 15/11/17.
  */
-public class YZNewsListFragment extends BaseFragment {
+public class ImageListFragment extends BaseFragment {
 
 	@Bind(R.id.fragment_news_recyclerview)
 	protected RecyclerView mRecyclerView;
@@ -52,12 +51,11 @@ public class YZNewsListFragment extends BaseFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.fragment_news;
+		return R.layout.fragment_content_recyclerview;
 	}
 
 	@Override
 	protected void initViewsAndEvents() {
-		Log.i("YZNewsListFragment");
 		mRecyclerView.removeAllViews();
 		LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 		layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -67,7 +65,7 @@ public class YZNewsListFragment extends BaseFragment {
 
 		List<String> data = new ArrayList<>();
 		for (int i = 0; i < 50; i++) {
-			data.add("moonLife " + (i + 1));
+			data.add("image " + (i + 1));
 		}
 		RecyclerViewAdapter mRecyclerViewAdapter = new RecyclerViewAdapter(data);
 //		AlphaInAnimationAdapter animationAdapter =new AlphaInAnimationAdapter(mRecyclerViewAdapter);
@@ -76,12 +74,5 @@ public class YZNewsListFragment extends BaseFragment {
 		animationAdapter.setFirstOnly(false);//true: 加载过动画后，以后不会再有 动画了
 		animationAdapter.setInterpolator(new OvershootInterpolator(1f));
 		mRecyclerView.setAdapter(animationAdapter);
-		mRecyclerView.refreshDrawableState();
-	}
-
-
-	@Override
-	public void initPresenter() {
-
 	}
 }

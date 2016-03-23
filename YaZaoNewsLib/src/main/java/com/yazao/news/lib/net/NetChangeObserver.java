@@ -1,8 +1,6 @@
 
 package com.yazao.news.lib.net;
 
-import com.yazao.news.lib.util.net.NetUtil;
-
 public interface NetChangeObserver {
 
 	/**

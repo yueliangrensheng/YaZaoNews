@@ -3,7 +3,7 @@ package com.yazao.news.interactor.impl;
 import android.content.Context;
 
 import com.yazao.news.R;
-import com.yazao.news.interactor.YZFragmentInteractor;
+import com.yazao.news.interactor.FragmentInteractor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.List;
  * Email: shaopingzhai@gmail.com
  * Descripton:
  */
-public class YZFragmentInteractorImpl implements YZFragmentInteractor {
+public class FragmentInteractorImpl implements FragmentInteractor {
 
 	@Override
 	public List<String> getCategoryDatas(Context context, int categoryFlag) {
-		List<String> list = new ArrayList<>();
+		List<String> list = new ArrayList<String>();
 		String[] array = null;
 		switch (categoryFlag) {
 			case 1://视频

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.animation.OvershootInterpolator;
 
 import com.yazao.news.R;
-import com.yazao.news.lib.util.log.Log;
 import com.yazao.news.ui.adapter.RecyclerViewAdapter;
 import com.yazao.news.widget.RecyclerViewLinearDividerItemDecoration;
 
@@ -17,47 +16,42 @@ import butterknife.Bind;
 import jp.wasabeef.recyclerview.animators.adapters.SlideInRightAnimationAdapter;
 
 /**
- * 每个新闻页面展示的内容
- * Created by shaopingzhai on 15/11/17.
+ * Author:  MoonLife
+ * Time: 2015/12/23 16:18
+ * Email: shaopingzhai@gmail.com
+ * Descripton:
  */
-public class YZImageListFragment extends BaseFragment {
-
+public class VideoListFragment extends BaseFragment {
 	@Bind(R.id.fragment_news_recyclerview)
 	protected RecyclerView mRecyclerView;
 
 	@Override
 	protected void getBundleArguments(Bundle arguments) {
-
 	}
 
 	@Override
 	protected void onFirstUserVisible() {
-
 	}
 
 	@Override
 	protected void onUserVisible() {
-
 	}
 
 	@Override
 	protected void onUserInvisible() {
-
 	}
 
 	@Override
 	protected void getBundleExtras(Bundle extras) {
-
 	}
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.fragment_news;
+		return R.layout.fragment_content_recyclerview;
 	}
 
 	@Override
 	protected void initViewsAndEvents() {
-		Log.i("YZImageListFragment");
 		mRecyclerView.removeAllViews();
 		LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 		layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -76,11 +70,5 @@ public class YZImageListFragment extends BaseFragment {
 		animationAdapter.setFirstOnly(false);//true: 加载过动画后，以后不会再有 动画了
 		animationAdapter.setInterpolator(new OvershootInterpolator(1f));
 		mRecyclerView.setAdapter(animationAdapter);
-	}
-
-
-	@Override
-	public void initPresenter() {
-
 	}
 }

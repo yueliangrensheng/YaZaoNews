@@ -5,9 +5,9 @@ import android.support.design.widget.TabLayout;
 
 import com.yazao.news.R;
 import com.yazao.news.api.GlobalParams;
-import com.yazao.news.presenter.impl.YZFragmentPresenterImpl;
+import com.yazao.news.presenter.impl.FragmentPresenterImpl;
 import com.yazao.news.ui.adapter.FragmentMainAdapter;
-import com.yazao.news.view.YZFragmentView;
+import com.yazao.news.view.FragmentView;
 import com.yazao.news.widget.XViewPager;
 
 import java.util.List;
@@ -20,7 +20,8 @@ import butterknife.Bind;
  * Email: shaopingzhai@gmail.com
  * Descripton:
  */
-public class YZImageFragment extends BaseFragment<YZFragmentPresenterImpl> implements YZFragmentView {
+public class VideoFragment extends BaseFragment<FragmentPresenterImpl> implements FragmentView
+{
 
 	@Bind(R.id.tablayout)
 	TabLayout tablayout;
@@ -30,27 +31,24 @@ public class YZImageFragment extends BaseFragment<YZFragmentPresenterImpl> imple
 
 	@Override
 	protected void getBundleArguments(Bundle arguments) {
-
 	}
 
 	@Override
 	protected void onFirstUserVisible() {
-
+		mPresenter = new FragmentPresenterImpl(getContext(),this);
+		mPresenter.initialized();
 	}
 
 	@Override
 	protected void onUserVisible() {
-
 	}
 
 	@Override
 	protected void onUserInvisible() {
-
 	}
 
 	@Override
 	protected void getBundleExtras(Bundle extras) {
-
 	}
 
 	@Override
@@ -64,17 +62,11 @@ public class YZImageFragment extends BaseFragment<YZFragmentPresenterImpl> imple
 
 
 	@Override
-	public void initPresenter() {
-		mPresenter = new YZFragmentPresenterImpl(getContext(), this);
-		mPresenter.initialized();
-	}
-
-	@Override
 	public void initView(List<String> oneCategoryDatas) {
 		if (oneCategoryDatas != null && !oneCategoryDatas.isEmpty()) {
 			fragment_viewpager.removeAllViews();
 			fragment_viewpager.setOffscreenPageLimit(oneCategoryDatas.size());
-			FragmentMainAdapter mFragmentMainAdapter = new FragmentMainAdapter(getFragmentManager(), oneCategoryDatas, GlobalParams.YZ_CATEGORY_IMAGE);
+			FragmentMainAdapter mFragmentMainAdapter = new FragmentMainAdapter(getChildFragmentManager(), oneCategoryDatas, GlobalParams.YZ_CATEGORY_VIDEO);
 			fragment_viewpager.setAdapter(mFragmentMainAdapter);
 
 			tablayout.removeAllTabs();
@@ -82,6 +74,5 @@ public class YZImageFragment extends BaseFragment<YZFragmentPresenterImpl> imple
 			tablayout.setTabsFromPagerAdapter(mFragmentMainAdapter);
 			tablayout.refreshDrawableState();
 		}
-
 	}
 }

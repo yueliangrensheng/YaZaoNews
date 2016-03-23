@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import com.yazao.news.R;
 import com.yazao.news.api.GlobalParams;
 import com.yazao.news.bean.NavigationBean;
-import com.yazao.news.interactor.YZMainInteractor;
-import com.yazao.news.ui.fragment.YZImageFragment;
-import com.yazao.news.ui.fragment.YZNewsFragment;
-import com.yazao.news.ui.fragment.YZVideoFragment;
+import com.yazao.news.interactor.MainInteractor;
+import com.yazao.news.ui.fragment.ImageFragment;
+import com.yazao.news.ui.fragment.NewsFragment;
+import com.yazao.news.ui.fragment.VideoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,12 @@ import java.util.List;
 /**
  * Created by shaopingzhai on 15/11/17.
  */
-public class YZMainInteractorImpl implements YZMainInteractor {
+public class MainInteractorImpl implements MainInteractor {
 
 	@Override
 	public List<NavigationBean> getNavigationData(Context context) {
 
-		List<NavigationBean> list = new ArrayList<>();
+		List<NavigationBean> list = new ArrayList<NavigationBean>();
 		if (context != null) {
 			String[] array = context.getResources().getStringArray(R.array.navigation_list);
 			if (array != null && array.length > 0) {
@@ -37,10 +37,10 @@ public class YZMainInteractorImpl implements YZMainInteractor {
 
 	@Override
 	public List<Fragment> getCategoryFragments() {
-		List<Fragment> fragments = new ArrayList<>();
-		fragments.add(new YZNewsFragment());
-		fragments.add(new YZVideoFragment());
-		fragments.add(new YZImageFragment());
+		List<Fragment> fragments = new ArrayList<Fragment>();
+		fragments.add(new NewsFragment());
+		fragments.add(new VideoFragment());
+		fragments.add(new ImageFragment());
 		return fragments;
 	}
 }

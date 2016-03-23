@@ -2,28 +2,28 @@ package com.yazao.news.presenter.impl;
 
 import android.app.Activity;
 
-import com.yazao.news.interactor.YZMainInteractor;
-import com.yazao.news.interactor.impl.YZMainInteractorImpl;
-import com.yazao.news.presenter.YZMainPresenter;
-import com.yazao.news.view.YZMainView;
+import com.yazao.news.interactor.MainInteractor;
+import com.yazao.news.interactor.impl.MainInteractorImpl;
+import com.yazao.news.presenter.MainPresenter;
+import com.yazao.news.view.MainView;
 
 /**
  * Created by shaopingzhai on 15/11/17.
  */
-public class YZMainPresenterImpl implements YZMainPresenter<YZMainView> {
+public class MainPresenterImpl implements MainPresenter<MainView> {
 
 	private Activity mContext;
-	private YZMainView mView;
-	private YZMainInteractor mInteractor;
+	private MainView mView;
+	private MainInteractor mInteractor;
 
-	public YZMainPresenterImpl(Activity context, YZMainView mainView) {
+	public MainPresenterImpl(Activity context, MainView mainView) {
 		if (null == mainView) {
 			throw new IllegalArgumentException("Constructor's parameters must not be Null");
 		}
 
 		this.mContext = context;
 		this.mView = mainView;
-		mInteractor = new YZMainInteractorImpl();
+		mInteractor = new MainInteractorImpl();
 	}
 
 	@Override

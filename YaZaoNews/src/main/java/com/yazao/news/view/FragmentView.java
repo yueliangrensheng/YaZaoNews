@@ -1,6 +1,6 @@
 package com.yazao.news.view;
 
-import com.yazao.news.view.base.YZBaseView;
+import com.yazao.news.view.base.BaseView;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * Email: shaopingzhai@gmail.com
  * Descripton:
  */
-public interface YZFragmentView extends YZBaseView {
+public interface FragmentView extends BaseView {
 
 	void initView(List<String> oneCategoryDatas);
 }

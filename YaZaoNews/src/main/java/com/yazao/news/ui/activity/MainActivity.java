@@ -21,18 +21,18 @@ import com.yazao.news.R;
 import com.yazao.news.api.GlobalParams;
 import com.yazao.news.bean.NavigationBean;
 import com.yazao.news.lib.util.log.Log;
-import com.yazao.news.lib.util.net.NetUtil;
-import com.yazao.news.presenter.impl.YZMainPresenterImpl;
-import com.yazao.news.ui.adapter.YZViewPagerAdapter;
-import com.yazao.news.view.YZMainView;
+import com.yazao.news.lib.net.NetUtil;
+import com.yazao.news.presenter.impl.MainPresenterImpl;
+import com.yazao.news.ui.adapter.ViewPagerAdapter;
+import com.yazao.news.view.MainView;
 import com.yazao.news.widget.XViewPager;
 
 import java.util.List;
 
 import butterknife.Bind;
 
-public class MainActivity extends BaseActivity<YZMainPresenterImpl>
-		implements NavigationView.OnNavigationItemSelectedListener, YZMainView {
+public class MainActivity extends BaseActivity<MainPresenterImpl>
+		implements NavigationView.OnNavigationItemSelectedListener, MainView {
 
 	@Bind(R.id.toolbar)
 	Toolbar toolbar;
@@ -71,12 +71,10 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 			}
 		});
 
-		setDrawerToggle();
-
 	}
 
 	@Override
-	protected int getContextViewLayoutID() {
+	protected int getContentViewLayoutID() {
 		return R.layout.activity_main;
 	}
 
@@ -121,7 +119,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 
 	}
 
-	private void setDrawerToggle() {
+	private void setDrawerToggle(final List<NavigationBean> navigationDatas) {
 
 		toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -134,7 +132,11 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 			@Override
 			public void onDrawerClosed(View drawerView) {
 				super.onDrawerClosed(drawerView);
-
+				if (mCurrentSelectedCategory >= GlobalParams.YZ_CATEGORY_NEWS && mCurrentSelectedCategory <= GlobalParams.YZ_CATEGORY_IMAGE) {
+					if(navigationDatas !=null && !navigationDatas.isEmpty()){
+						setTitle(navigationDatas.get(mCurrentSelectedCategory).getName());
+					}
+				}
 			}
 		};
 		drawer.setDrawerListener(toggle);
@@ -142,6 +144,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 			toggle.syncState();
 		}
 
+		toggle.setDrawerIndicatorEnabled(true);
 		navigationView.setNavigationItemSelectedListener(this);
 	}
 
@@ -160,7 +163,7 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		if (toggle != null) {
-			toggle.syncState();
+			toggle.onConfigurationChanged(newConfig);
 		}
 	}
 
@@ -255,18 +258,18 @@ public class MainActivity extends BaseActivity<YZMainPresenterImpl>
 
 	@Override
 	public void initPresenter() {
-		mPresenter = new YZMainPresenterImpl(this, this);
+		mPresenter = new MainPresenterImpl(this, this);
 		mPresenter.initialized();
 	}
 
 	@Override
 	public void initMainView(List<Fragment> fragments, List<NavigationBean> navigationDatas) {
-
-		mViewPager.setOffscreenPageLimit(1);
-
-		YZViewPagerAdapter mViewPagerAdapter = new YZViewPagerAdapter(getSupportFragmentManager(), fragments);
+		setDrawerToggle(navigationDatas);
 		//取消当前页面中的viewpager 滑动功能，将这个滑动功能传递到 其子view 中。也就是事件传递下发给子view
 		mViewPager.setIsEnableScroll(false);
+		mViewPager.setOffscreenPageLimit(fragments.size());
+
+		ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
 		mViewPager.setAdapter(mViewPagerAdapter);
 
 	}

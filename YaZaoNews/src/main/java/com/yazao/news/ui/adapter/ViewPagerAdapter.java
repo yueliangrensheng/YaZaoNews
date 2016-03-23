@@ -11,10 +11,10 @@ import java.util.List;
  * 新闻页展示 的 适配器
  * Created by shaopingzhai on 15/11/17.
  */
-public class YZViewPagerAdapter extends FragmentPagerAdapter {
-	List<Fragment> fragments = new ArrayList<>();
+public class ViewPagerAdapter extends FragmentPagerAdapter {
+	List<Fragment> fragments = new ArrayList<Fragment>();
 
-	public YZViewPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+	public ViewPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
 		super(fm);
 		this.fragments = fragments;
 	}

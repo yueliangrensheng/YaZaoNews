@@ -3,14 +3,14 @@ package com.yazao.news.ui.activity;
 import android.os.Bundle;
 
 import com.yazao.news.lib.base.YZBaseActivity;
-import com.yazao.news.presenter.base.YZBasePresenter;
+import com.yazao.news.presenter.base.BasePresenter;
 
 /**
  * Author:  shaopingzhai on 15/12/9.
  * Time: 2015/12/09 18:20
  * Contact: shaopingzhai@gmail.com
  */
-public abstract class BaseActivity<YZ extends YZBasePresenter> extends YZBaseActivity{
+public abstract class BaseActivity<YZ extends BasePresenter> extends YZBaseActivity{
 
 	protected YZ mPresenter;
 

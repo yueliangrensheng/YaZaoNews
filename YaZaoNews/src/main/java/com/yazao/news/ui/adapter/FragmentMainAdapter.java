@@ -4,10 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.yazao.news.lib.util.log.Log;
-import com.yazao.news.ui.fragment.YZImageListFragment;
-import com.yazao.news.ui.fragment.YZNewsListFragment;
-import com.yazao.news.ui.fragment.YZVideoListFragment;
+import com.yazao.news.ui.fragment.ImageListFragment;
+import com.yazao.news.ui.fragment.NewsListFragment;
+import com.yazao.news.ui.fragment.VideoListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public class FragmentMainAdapter extends FragmentPagerAdapter {
 
-	private List<String> oneCategoryDatas = new ArrayList<>();
+	private List<String> oneCategoryDatas = new ArrayList<String>();
 	private int categoryFlag = 0;
 
 	public FragmentMainAdapter(FragmentManager fm, List<String> oneCategoryDatas, int categoryFlag) {
@@ -34,16 +33,15 @@ public class FragmentMainAdapter extends FragmentPagerAdapter {
 		Fragment fragment = null;
 		switch (categoryFlag) {
 			case 2://美图
-				fragment=new YZImageListFragment();
+				fragment=new ImageListFragment();
 				break;
 			case 1://视频
-				fragment=new YZVideoListFragment();
+				fragment=new VideoListFragment();
 				break;
 			case 0://新闻
 			default:
-				fragment=new YZNewsListFragment();
+				fragment=new NewsListFragment();
 		}
-		Log.i("fragment= "+fragment.toString());
 		return fragment;
 	}
 

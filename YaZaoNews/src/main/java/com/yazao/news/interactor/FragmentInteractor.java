@@ -2,7 +2,7 @@ package com.yazao.news.interactor;
 
 import android.content.Context;
 
-import com.yazao.news.interactor.base.YZBaseInteractor;
+import com.yazao.news.interactor.base.BaseInteractor;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * Email: shaopingzhai@gmail.com
  * Descripton:
  */
-public interface YZFragmentInteractor extends YZBaseInteractor{
+public interface FragmentInteractor extends BaseInteractor {
 	/**
 	 * 获取某个分类的数据
 	 * @param context

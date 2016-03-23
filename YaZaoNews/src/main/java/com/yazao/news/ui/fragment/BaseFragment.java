@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yazao.news.lib.base.YZBaseFragment;
-import com.yazao.news.presenter.base.YZBasePresenter;
+import com.yazao.news.presenter.base.BasePresenter;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import com.yazao.news.presenter.base.YZBasePresenter;
  * Contact: shaopingzhai@gmail.com<Br>
  * </p>
  */
-public abstract class BaseFragment<YZ extends YZBasePresenter> extends YZBaseFragment {
+public abstract class BaseFragment<YZ extends BasePresenter> extends YZBaseFragment {
 
 	protected YZ mPresenter;
 
@@ -37,22 +37,7 @@ public abstract class BaseFragment<YZ extends YZBasePresenter> extends YZBaseFra
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		initPresenter();
-//		checkPresenterIsNull();
 	}
-
-	/**
-	 * 初始化presenter
-	 */
-	public abstract void initPresenter();
-
-
-	private void checkPresenterIsNull(){
-		if(mPresenter == null){
-			throw new IllegalStateException("please init mPresenter in initPresenter() method ");
-		}
-	}
-
 
 	@Override
 	public void onDestroy() {

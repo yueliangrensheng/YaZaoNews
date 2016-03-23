@@ -1,4 +1,4 @@
-package com.yazao.news.lib.util.net;
+package com.yazao.news.lib.net;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
