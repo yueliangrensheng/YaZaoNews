@@ -1,16 +1,16 @@
 package com.yazao.news.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Toast;
 
 import com.yazao.news.R;
 import com.yazao.news.ui.adapter.RecyclerViewAdapter;
 import com.yazao.news.widget.RecyclerViewLinearDividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.yazao.news.widget.XSwipeRefreshLayout;
 
 import butterknife.Bind;
 import jp.wasabeef.recyclerview.animators.adapters.SlideInRightAnimationAdapter;
@@ -19,10 +19,12 @@ import jp.wasabeef.recyclerview.animators.adapters.SlideInRightAnimationAdapter;
  * 新闻页面展示的内容
  * Created by shaopingzhai on 15/11/17.
  */
-public class NewsListFragment extends BaseFragment {
+public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
 	@Bind(R.id.fragment_news_recyclerview)
 	protected RecyclerView mRecyclerView;
+	@Bind(R.id.swiperefreshlayout)
+	protected XSwipeRefreshLayout mSwipeRefreshLayout;
 
 	@Override
 	protected void getBundleArguments(Bundle arguments) {
@@ -63,11 +65,7 @@ public class NewsListFragment extends BaseFragment {
 		mRecyclerView.setLayoutManager(layoutManager);
 		mRecyclerView.addItemDecoration(new RecyclerViewLinearDividerItemDecoration(getContext(), RecyclerViewLinearDividerItemDecoration.VERTICAL_LIST));
 
-		List<String> data = new ArrayList<>();
-		for (int i = 0; i < 50; i++) {
-			data.add("news " + (i + 1));
-		}
-		RecyclerViewAdapter mRecyclerViewAdapter = new RecyclerViewAdapter(data);
+		RecyclerViewAdapter mRecyclerViewAdapter = new RecyclerViewAdapter();
 //		AlphaInAnimationAdapter animationAdapter =new AlphaInAnimationAdapter(mRecyclerViewAdapter);
 		SlideInRightAnimationAdapter animationAdapter = new SlideInRightAnimationAdapter(mRecyclerViewAdapter);
 		animationAdapter.setDuration(1000);
@@ -75,5 +73,26 @@ public class NewsListFragment extends BaseFragment {
 		animationAdapter.setInterpolator(new OvershootInterpolator(1f));
 		mRecyclerView.setAdapter(animationAdapter);
 		mRecyclerView.refreshDrawableState();
+		mSwipeRefreshLayout.setColorSchemeColors(
+				getResources().getColor(R.color.color_refresh_green),
+				getResources().getColor(R.color.color_refresh_purple),
+				getResources().getColor(R.color.colorPrimary),
+				getResources().getColor(R.color.colorAccent)
+
+		);
+		mSwipeRefreshLayout.setBackgroundColor(getResources().getColor(R.color.grayLine));
+		mSwipeRefreshLayout.setOnRefreshListener(this);
+	}
+
+	// mSwipeRefreshLayout
+	@Override
+	public void onRefresh() {
+		mSwipeRefreshLayout.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				mSwipeRefreshLayout.setRefreshing(false);
+			}
+		},5000);
+		Toast.makeText(getActivity(), "onRefresh", Toast.LENGTH_SHORT).show();
 	}
 }

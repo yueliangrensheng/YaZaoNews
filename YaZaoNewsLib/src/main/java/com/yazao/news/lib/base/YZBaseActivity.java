@@ -26,12 +26,11 @@ public abstract class YZBaseActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
 		if (isNoTitle()){
 		 	/*set it to be no title*/
 			requestWindowFeature(Window.FEATURE_NO_TITLE);
 		}
+		super.onCreate(savedInstanceState);
 		if (isNoStateBar()){
 //			View doctorView =findViewById(android.R.id.content);
 			View doctorView =getWindow().getDecorView();
@@ -43,7 +42,6 @@ public abstract class YZBaseActivity extends AppCompatActivity {
 					WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		}
-
 
 		//Bundle
 		Bundle extras = getIntent().getExtras();

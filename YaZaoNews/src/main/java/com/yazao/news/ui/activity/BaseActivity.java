@@ -21,7 +21,7 @@ public abstract class BaseActivity<YZ extends BasePresenter> extends YZBaseActiv
 		super.onCreate(savedInstanceState);
 
 		initPresenter();
-		checkPresenterIsNull();
+//		checkPresenterIsNull();
 	}
 
 	private void initSwipeLayout() {

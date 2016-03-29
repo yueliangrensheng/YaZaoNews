@@ -20,6 +20,7 @@ import com.yazao.news.presenter.base.BasePresenter;
 public abstract class BaseFragment<YZ extends BasePresenter> extends YZBaseFragment {
 
 	protected YZ mPresenter;
+	protected String TAG_LOG = null;
 
 	public static final String INTENT_ACTION_NEWS_CATEGORY = "newsCategory";
 
@@ -37,6 +38,7 @@ public abstract class BaseFragment<YZ extends BasePresenter> extends YZBaseFragm
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		TAG_LOG = this.getClass().getSimpleName();
 	}
 
 	@Override

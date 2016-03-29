@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yazao.news.R;
+import com.yazao.news.bean.ImageListBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +25,23 @@ import butterknife.ButterKnife;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
 	List<String> data = new ArrayList<>();
+	List<ImageListBean> imageListBeanData = new ArrayList<ImageListBean>();
 
+	public RecyclerViewAdapter() {
+	}
 
-	public RecyclerViewAdapter(List<String> data) {
-		this.data = data;
+	public RecyclerViewAdapter(List<ImageListBean> data) {
+		this.imageListBeanData = data;
+	}
+
+	public List<ImageListBean> getListData() {
+		return imageListBeanData;
 	}
 
 	@Override
 	public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_news_item, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_image_item, parent, false);
 		ViewHolder viewHolder = new ViewHolder(view);
 		return viewHolder;
 	}
